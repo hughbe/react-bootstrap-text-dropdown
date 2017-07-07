@@ -4,11 +4,11 @@ import sortByLevenshteinDistance from 'levenshtein-sort';
 export default class TextDropdown extends Component {
   state = {value: ''};
 
-  componentWillMount = () => this.setState({value: this.props.defaultValue});
+  componentWillMount = () => this.setState({value: this.props.defaultValue || ''});
 
   handleInputChanged = (event) => {
     this.filterValues(event.target.value);
-    this.props.onInputChanged(event.target.value);
+    this.props.onInputChanged && this.props.onInputChanged(event.target.value);
   }
 
   handleValueSelected = (event, value) => {
@@ -87,7 +87,7 @@ export default class TextDropdown extends Component {
 
   render() {
     const valueSelector = this.props.valueSelector || (value => value);
-    const { id, placeholder } = this.props;
+    const { className, id, placeholder } = this.props;
     const { value, filteredValues } = this.state;
 
     const results = filteredValues && filteredValues.map((value, index) => (
@@ -98,7 +98,7 @@ export default class TextDropdown extends Component {
     const showDropdown = value.length !== 0 && filteredValues && filteredValues.length !== 0 && !(filteredValues.length === 1 && valueSelector(filteredValues[0]) === value);
 
     return (
-      <div className={`input-group dropdown ${showDropdown ? 'show' : ''}`}>
+      <div className={`${className} dropdown ${showDropdown ? 'show' : ''}`}>
         <input
           id={`${id}-dropdown-input`}
           type="text"
