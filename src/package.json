@@ -1,0 +1,37 @@
+{
+  "name": "react-bootstrap-text-dropdown",
+  "version": "1.0.0",
+  "description": "A complete-as-you-type React component styled with Bootstrap 4.",
+  "main": "./build/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hughbe/react-bootstrap-text-dropdown.git"
+  },
+  "keywords": [
+    "react",
+    "bootstrap",
+    "text dropdown",
+    "text completion"
+  ],
+  "author": "Hugh Bellamy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hughbe/react-bootstrap-text-dropdown/issues"
+  },
+  "homepage": "https://github.com/hughbe/react-bootstrap-text-dropdown#readme",
+  "dependencies": {
+    "babel-polyfill": "^6.23.0",
+    "levenshtein-sort": "^1.0.0",
+    "react": "^15.6.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1"
+  },
+  "scripts": {
+    "build": "babel lib --presets env,react --plugins=transform-class-properties --out-dir build",
+    "prepublish": "npm run build"
+  }
+}
