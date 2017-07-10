@@ -4,11 +4,14 @@ import sortByLevenshteinDistance from 'levenshtein-sort';
 export default class TextDropdown extends Component {
   state = {value: ''};
 
-  componentWillMount = () => this.setState({value: this.props.defaultValue || ''});
+  componentWillMount = () => this.updateValue();
+  componentDidUpdate = (prevProps) => this.props.defaultValue !== prevProps.defaultValue && this.updateValue();
 
-  handleInputChanged = (event) => {
+  updateValue = () => this.setState({value: this.props.defaultValue || ''});
+
+  handleValueChanged = (event) => {
     this.filterValues(event.target.value);
-    this.props.onInputChanged && this.props.onInputChanged(event.target.value);
+    this.props.onValueChanged && this.props.onValueChanged(event.target.value);
   }
 
   handleValueSelected = (event, value) => {
@@ -108,7 +111,7 @@ export default class TextDropdown extends Component {
           autoFocus
           tabIndex={0}
           value={value}
-          onChange={this.handleInputChanged}
+          onChange={this.handleValueChanged}
           onKeyDown={this.handleInputKeyDown}
           onKeyPress={(e) => e.stopPropagation()}
           required />
