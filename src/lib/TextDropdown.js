@@ -90,7 +90,7 @@ export default class TextDropdown extends Component {
 
   render() {
     const valueSelector = this.props.valueSelector || (value => value);
-    const { className, id, placeholder } = this.props;
+    const { className, id, placeholder, name } = this.props;
     const { value, filteredValues } = this.state;
 
     const results = filteredValues && filteredValues.map((value, index) => (
@@ -110,6 +110,7 @@ export default class TextDropdown extends Component {
           className="form-control"
           autoFocus
           tabIndex={0}
+          name={name}
           value={value}
           onChange={this.handleValueChanged}
           onKeyDown={this.handleInputKeyDown}
