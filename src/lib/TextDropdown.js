@@ -4,10 +4,8 @@ import sortByLevenshteinDistance from 'levenshtein-sort';
 export default class TextDropdown extends Component {
   state = {value: ''};
 
-  componentWillMount = () => this.updateValue();
-  componentDidUpdate = (prevProps) => this.props.defaultValue !== prevProps.defaultValue && this.updateValue();
-
-  updateValue = () => this.setState({value: this.props.defaultValue || ''});
+  componentWillMount = () => this.filterValues(this.props.defaultValue || '');
+  componentDidUpdate = (prevProps) => this.props.defaultValue !== prevProps.defaultValue && this.filterValue(this.props.defaultValue || '');
 
   handleValueChanged = (event) => {
     this.filterValues(event.target.value);
@@ -98,10 +96,17 @@ export default class TextDropdown extends Component {
     ));
 
     // Don't show the dropdown if there is no text in the list, the list is empty or there is one exact match.
-    const showDropdown = value.length !== 0 && filteredValues && filteredValues.length !== 0 && !(filteredValues.length === 1 && valueSelector(filteredValues[0]) === value);
+    let showDropdown;
+    if (value.length === 0 || !filteredValues || !filteredValues.length) {
+      showDropdown = false;
+    } else {
+      showDropdown = !filteredValues.some(v => valueSelector(v) === value);
+    }
+
+    const anyMatches = filteredValues && filteredValues.length;
 
     return (
-      <div className={`${className} dropdown ${showDropdown ? 'show' : ''}`}>
+      <div className={`${className} dropdown ${showDropdown ? 'show' : ''} ${!anyMatches && 'has-danger'}`}>
         <input
           id={`${id}-dropdown-input`}
           type="text"
