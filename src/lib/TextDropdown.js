@@ -5,7 +5,7 @@ export default class TextDropdown extends Component {
   state = {value: ''};
 
   componentWillMount = () => this.filterValues(this.props.defaultValue || '');
-  componentDidUpdate = (prevProps) => this.props.defaultValue !== prevProps.defaultValue && this.filterValue(this.props.defaultValue || '');
+  componentDidUpdate = (prevProps) => this.props.defaultValue !== prevProps.defaultValue && this.filterValues(this.props.defaultValue || '');
 
   handleValueChanged = (event) => {
     this.filterValues(event.target.value);
@@ -88,7 +88,7 @@ export default class TextDropdown extends Component {
 
   render() {
     const valueSelector = this.props.valueSelector || (value => value);
-    const { className, id, placeholder, name } = this.props;
+    const { className, id, placeholder, name, showIfEmpty } = this.props;
     const { value, filteredValues } = this.state;
 
     const results = filteredValues && filteredValues.map((value, index) => (
@@ -98,7 +98,7 @@ export default class TextDropdown extends Component {
     // Don't show the dropdown if there is no text in the list, the list is empty or there is one exact match.
     let showDropdown;
     if (value.length === 0 || !filteredValues || !filteredValues.length) {
-      showDropdown = false;
+      showDropdown = showIfEmpty;
     } else {
       showDropdown = !filteredValues.some(v => valueSelector(v) === value);
     }
