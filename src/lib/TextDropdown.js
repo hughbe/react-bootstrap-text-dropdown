@@ -89,7 +89,7 @@ export default class TextDropdown extends Component {
   render() {
     const valueSelector = this.props.valueSelector || (value => value);
     const { className, id, placeholder, name, showIfEmpty } = this.props;
-    const { value, filteredValues } = this.state;
+    const { value, filteredValues, focused } = this.state;
 
     const results = filteredValues && filteredValues.map((value, index) => (
       <a key={index} className="dropdown-item" href="#" tabIndex="0" onClick={e => this.handleValueSelected(e, value)}>{valueSelector(value)}</a>
@@ -97,8 +97,11 @@ export default class TextDropdown extends Component {
 
     // Don't show the dropdown if there is no text in the list, the list is empty or there is one exact match.
     let showDropdown;
-    if (value.length === 0 || !filteredValues || !filteredValues.length) {
+    if (value.length === 0 && focused) {
       showDropdown = showIfEmpty;
+    }
+    else if (value.length === 0 || !filteredValues || !filteredValues.length) {
+      showDropdown = false;
     } else {
       showDropdown = !filteredValues.some(v => valueSelector(v) === value);
     }
@@ -117,6 +120,8 @@ export default class TextDropdown extends Component {
           tabIndex={0}
           name={name}
           value={value}
+          onFocus={() => this.setState({focused: true})}
+          onBlur={() => this.setState({focused: false})}
           onChange={this.handleValueChanged}
           onKeyDown={this.handleInputKeyDown}
           onKeyPress={(e) => e.stopPropagation()}
