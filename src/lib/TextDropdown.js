@@ -92,7 +92,7 @@ export default class TextDropdown extends Component {
     const { value, filteredValues, focused } = this.state;
 
     const results = filteredValues && filteredValues.map((value, index) => (
-      <a key={index} className="dropdown-item" href="#" tabIndex="0" onClick={e => this.handleValueSelected(e, value)}>{valueSelector(value)}</a>
+      <a key={index} className="dropdown-item" href="#" tabIndex="0" onMouseDown={e => this.handleValueSelected(e, value)}>{valueSelector(value)}</a>
     ));
 
     // Don't show the dropdown if there is no text in the list, the list is empty or there is one exact match.
