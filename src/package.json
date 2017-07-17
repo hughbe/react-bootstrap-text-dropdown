@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-text-dropdown",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "A complete-as-you-type React component styled with Bootstrap 4.",
   "main": "./build/index.js",
   "repository": {

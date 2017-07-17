@@ -13,8 +13,10 @@ export default class TextDropdown extends Component {
   }
 
   handleValueSelected = (event, value) => {
+    const valueSelector = this.props.valueSelector || (value => value);
+
     event.preventDefault();
-    this.filterValues(value);
+    this.filterValues(valueSelector(value));
     this.props.onValueSelected(value);
   }
 
